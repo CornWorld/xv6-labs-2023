@@ -150,7 +150,6 @@ UPROGS=\
 	$U/_wc\
 	$U/_zombie\
 
-
 ifeq ($(LAB),syscall)
 UPROGS += \
 	$U/_trace\
@@ -175,6 +174,13 @@ endif
 
 UEXTRA=
 ifeq ($(LAB),util)
+	UPROGS+=\
+	$U/_sleep\
+	$U/_pingpong\
+	$U/_primes\
+	$U/_find \
+	$U/_xargs
+
 	UEXTRA += user/xargstest.sh
 endif
 
