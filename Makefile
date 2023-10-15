@@ -179,7 +179,8 @@ ifeq ($(LAB),util)
 	$U/_pingpong\
 	$U/_primes\
 	$U/_find \
-	$U/_xargs
+	$U/_xargs \
+	$U/_uptime  
 
 	UEXTRA += user/xargstest.sh
 endif
