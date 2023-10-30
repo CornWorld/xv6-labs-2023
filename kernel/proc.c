@@ -126,6 +126,8 @@ found:
   memset(&p->context, 0, sizeof(p->context));
   p->context.ra = (uint64)forkret;
   p->context.sp = p->kstack + PGSIZE;
+  
+  p->traced = 0;
 
   return p;
 }
@@ -149,6 +151,7 @@ freeproc(struct proc *p)
   p->chan = 0;
   p->killed = 0;
   p->xstate = 0;
+  p->traced = 0;
   p->state = UNUSED;
 }
 
@@ -294,6 +297,8 @@ fork(void)
   pid = np->pid;
 
   np->state = RUNNABLE;
+  
+  np->traced = p->traced;
 
   release(&np->lock);
 
@@ -692,4 +697,16 @@ procdump(void)
     printf("%d %s %s", p->pid, state, p->name);
     printf("\n");
   }
+}
+
+uint64
+proccount()
+{
+	uint ret=0;
+	// count the number of processes
+	struct proc *p;
+	for(p = proc; p < &proc[NPROC]; p++){
+		if(p->state != UNUSED) ++ret;
+	}
+	return ret;
 }
